@@ -1,6 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import SingleArticlePage from "./components/SingleArticlePage";
+import TopicList from "./components/TopicList";
+import TopicArticles from "./components/TopicArticles";
 import "./App.css";
 
 function App() {
@@ -9,6 +11,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/articles/:article_id" element={<SingleArticlePage />} />
+        <Route path="/topics" element={<TopicList />} />
+        <Route path="/topics/:topic" element={<TopicArticles />} />
       </Routes>
     </div>
   );
