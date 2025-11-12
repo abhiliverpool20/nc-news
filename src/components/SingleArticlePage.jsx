@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Votes from "./Votes";
 import CommentList from "./CommentList";
+import NewComment from "./NewComment";
 
 function SingleArticlePage() {
   const { article_id } = useParams();
   const [article, setArticle] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [refreshKey, setRefreshKey] = useState(0); // for refreshing comments after posting
 
   useEffect(() => {
     setIsLoading(true);
@@ -56,12 +59,21 @@ function SingleArticlePage() {
 
       <hr style={{ margin: "1.5rem 0" }} />
 
-      <p>
-        <strong>Votes:</strong> {article.votes} &nbsp;|&nbsp;
-        <strong>Comments:</strong> {article.comment_count}
-      </p>
+      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+        <div>
+          <strong>Comments:</strong> {article.comment_count}
+        </div>
+        <Votes articleId={article.article_id} initialVotes={article.votes} />
+      </div>
 
-      <CommentList articleId={article_id} />
+      {/* New comment form */}
+      <NewComment
+        articleId={article.article_id}
+        onSuccess={() => setRefreshKey((k) => k + 1)}
+      />
+
+      {/* Comments list */}
+      <CommentList articleId={article_id} refreshKey={refreshKey} />
     </main>
   );
 }
