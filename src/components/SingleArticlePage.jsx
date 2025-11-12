@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import CommentList from "./CommentList";
 
 function SingleArticlePage() {
   const { article_id } = useParams();
@@ -59,6 +60,8 @@ function SingleArticlePage() {
         <strong>Votes:</strong> {article.votes} &nbsp;|&nbsp;
         <strong>Comments:</strong> {article.comment_count}
       </p>
+
+      <CommentList articleId={article_id} />
     </main>
   );
 }
