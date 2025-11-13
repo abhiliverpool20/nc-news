@@ -5,11 +5,15 @@ function NewComment({ articleId, username = "jessjelly", onSuccess }) {
   const [isPosting, setIsPosting] = useState(false);
   const [error, setError] = useState(null);
 
-  const canSubmit = body.trim().length > 0 && !isPosting;
+  const canSubmit = !isPosting;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!canSubmit) return;
+
+    if (body.trim().length === 0) {
+      setError("Please enter a comment before posting.");
+      return;
+    }
 
     setIsPosting(true);
     setError(null);
@@ -23,7 +27,9 @@ function NewComment({ articleId, username = "jessjelly", onSuccess }) {
       }
     )
       .then((res) => {
-        if (!res.ok) throw new Error("Failed to post comment");
+        if (!res.ok) {
+          throw new Error("POST_FAILED");
+        }
         return res.json();
       })
       .then(() => {
@@ -31,7 +37,7 @@ function NewComment({ articleId, username = "jessjelly", onSuccess }) {
         if (onSuccess) onSuccess();
       })
       .catch(() => {
-        setError("Could not post comment. Please try again.");
+        setError("We couldn’t post your comment. Please try again.");
       })
       .finally(() => setIsPosting(false));
   };
@@ -62,6 +68,7 @@ function NewComment({ articleId, username = "jessjelly", onSuccess }) {
           display: "flex",
           alignItems: "center",
           gap: "0.5rem",
+          flexWrap: "wrap",
         }}
       >
         <button type="submit" disabled={!canSubmit}>

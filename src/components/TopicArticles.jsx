@@ -23,7 +23,12 @@ function TopicArticles() {
 
     fetch(url.toString())
       .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch topic articles");
+        if (res.status === 404) {
+          throw new Error("TOPIC_NOT_FOUND");
+        }
+        if (!res.ok) {
+          throw new Error("FETCH_FAILED");
+        }
         return res.json();
       })
       .then((data) => {
@@ -31,13 +36,29 @@ function TopicArticles() {
         setIsLoading(false);
       })
       .catch((err) => {
-        setError(err.message);
+        if (err.message === "TOPIC_NOT_FOUND") {
+          setError("This topic does not exist.");
+        } else {
+          setError(
+            "We couldn’t load articles for this topic. Please try again later."
+          );
+        }
         setIsLoading(false);
       });
   }, [topic, sort_by, order]);
 
   if (isLoading) return <p>Loading articles…</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (error) {
+    return (
+      <main style={{ maxWidth: 900, margin: "0 auto", padding: "1rem" }}>
+        <h1>Topic error</h1>
+        <p>{error}</p>
+        <p>
+          Go back to <Link to="/topics">all topics</Link>.
+        </p>
+      </main>
+    );
+  }
 
   return (
     <main style={{ maxWidth: 900, margin: "0 auto", padding: "1rem" }}>

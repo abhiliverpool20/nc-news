@@ -9,7 +9,8 @@ function SingleArticlePage() {
   const [article, setArticle] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [refreshKey, setRefreshKey] = useState(0); // for refreshing comments after posting
+  const [refreshKey, setRefreshKey] = useState(0);
+  const currentUser = "jessjelly";
 
   useEffect(() => {
     setIsLoading(true);
@@ -17,7 +18,12 @@ function SingleArticlePage() {
 
     fetch(`https://nc-news-api-ktmb.onrender.com/api/articles/${article_id}`)
       .then((res) => {
-        if (!res.ok) throw new Error(`Failed to fetch article ${article_id}`);
+        if (res.status === 404) {
+          throw new Error("NOT_FOUND");
+        }
+        if (!res.ok) {
+          throw new Error("FETCH_FAILED");
+        }
         return res.json();
       })
       .then((data) => {
@@ -25,13 +31,24 @@ function SingleArticlePage() {
         setIsLoading(false);
       })
       .catch((err) => {
-        setError(err.message);
+        if (err.message === "NOT_FOUND") {
+          setError("This article does not exist.");
+        } else {
+          setError("We couldn’t load this article. Please try again later.");
+        }
         setIsLoading(false);
       });
   }, [article_id]);
 
   if (isLoading) return <p>Loading article...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (error) {
+    return (
+      <main style={{ maxWidth: 600, margin: "0 auto", padding: "1rem" }}>
+        <h1>Article error</h1>
+        <p>{error}</p>
+      </main>
+    );
+  }
   if (!article) return <p>Article not found.</p>;
 
   return (
@@ -66,14 +83,16 @@ function SingleArticlePage() {
         <Votes articleId={article.article_id} initialVotes={article.votes} />
       </div>
 
-      {/* New comment form */}
       <NewComment
         articleId={article.article_id}
         onSuccess={() => setRefreshKey((k) => k + 1)}
       />
 
-      {/* Comments list */}
-      <CommentList articleId={article_id} refreshKey={refreshKey} />
+      <CommentList
+        articleId={article_id}
+        refreshKey={refreshKey}
+        currentUser={currentUser}
+      />
     </main>
   );
 }
