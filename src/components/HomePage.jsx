@@ -1,13 +1,25 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import SortControls from "./SortControls";
 
 function HomePage() {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchParams] = useSearchParams();
+
+  const sort_by = searchParams.get("sort_by") || "created_at";
+  const order = searchParams.get("order") || "desc";
 
   useEffect(() => {
-    fetch("https://nc-news-api-ktmb.onrender.com/api/articles")
+    setIsLoading(true);
+    setError(null);
+
+    const url = new URL("https://nc-news-api-ktmb.onrender.com/api/articles");
+    url.searchParams.set("sort_by", sort_by);
+    url.searchParams.set("order", order);
+
+    fetch(url.toString())
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch articles");
         return res.json();
@@ -20,7 +32,7 @@ function HomePage() {
         setError(err.message);
         setIsLoading(false);
       });
-  }, []);
+  }, [sort_by, order]);
 
   if (isLoading) return <p>Loading articles...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -28,6 +40,9 @@ function HomePage() {
   return (
     <main>
       <h1>All Articles</h1>
+
+      <SortControls />
+
       <ul>
         {articles.map((article) => (
           <li key={article.article_id} style={{ marginBottom: "1.5rem" }}>

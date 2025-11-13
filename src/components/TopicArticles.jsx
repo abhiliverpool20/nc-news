@@ -1,21 +1,27 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useSearchParams } from "react-router-dom";
+import SortControls from "./SortControls";
 
 function TopicArticles() {
   const { topic } = useParams();
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchParams] = useSearchParams();
+
+  const sort_by = searchParams.get("sort_by") || "created_at";
+  const order = searchParams.get("order") || "desc";
 
   useEffect(() => {
     setIsLoading(true);
     setError(null);
 
-    fetch(
-      `https://nc-news-api-ktmb.onrender.com/api/articles?topic=${encodeURIComponent(
-        topic
-      )}`
-    )
+    const url = new URL("https://nc-news-api-ktmb.onrender.com/api/articles");
+    url.searchParams.set("topic", topic);
+    url.searchParams.set("sort_by", sort_by);
+    url.searchParams.set("order", order);
+
+    fetch(url.toString())
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch topic articles");
         return res.json();
@@ -28,7 +34,7 @@ function TopicArticles() {
         setError(err.message);
         setIsLoading(false);
       });
-  }, [topic]);
+  }, [topic, sort_by, order]);
 
   if (isLoading) return <p>Loading articles…</p>;
   if (error) return <p>Error: {error}</p>;
@@ -36,6 +42,9 @@ function TopicArticles() {
   return (
     <main style={{ maxWidth: 900, margin: "0 auto", padding: "1rem" }}>
       <h1>Topic: {topic}</h1>
+
+      <SortControls />
+
       {articles.length === 0 ? (
         <p>No articles for this topic.</p>
       ) : (
