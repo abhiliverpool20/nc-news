@@ -1,81 +1,20 @@
-📰 NC News — Front-End (React)
+# React + Vite
 
-A responsive React application for browsing, sorting, and interacting with news articles.
-Built using React, React Router, and a hosted NC News API.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-🌐 Deployed Front-End
+## Official Plugins
 
-https://your-frontend-deployment-link-here.com
+Currently, two official plugins are available:
 
-(Replace this with your actual deployed frontend URL.)
+- **@vitejs/plugin-react** — uses Babel (or oxc when used in rolldown-vite) for Fast Refresh
+- **@vitejs/plugin-react-swc** — uses SWC for Fast Refresh
 
-🔗 Back-End Repository
+## React Compiler
 
-Back-end repo:
-https://github.com/abhishek-0001/northcoders-news-BE
+The React Compiler is not enabled in this template because of its impact on dev and build performance.  
+To add it, see the official documentation.
 
-Live API:
-https://nc-news-api-ktmb.onrender.com/api
+## Expanding the ESLint Configuration
 
-📘 About This App
-
-NC News is a social news platform where users can:
-
-View all articles
-
-Sort articles by date, votes, and comment count
-
-View articles filtered by topic
-
-Read full articles
-
-Vote on articles
-
-Post new comments
-
-Delete their own comments
-
-Navigate with React Router
-
-Receive helpful error messages for invalid routes/topics/articles
-
-📦 Minimum Node Version
-
-This project requires:
-
-Node v20.0.0 or higher
-
-Check your version with:
-
-node --version
-
-🧰 Running This Project Locally
-
-Follow these steps:
-
-1. Clone the repository
-   git clone https://github.com/<your-username>/nc-news.git
-
-2. Enter the folder
-   cd nc-news
-
-3. Install dependencies
-   npm install
-
-4. Start the development server
-   npm run dev
-
-Your app will run at:
-
-http://localhost:5173/
-
-📝 Planning Documentation
-
-All planning files (wireframes + component tree) are stored in:
-
-/planning
-
-🏁 Attribution
-
-This portfolio project was created as part of a Digital Skills Bootcamp in Software Engineering provided by Northcoders
-.
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled.  
+Check out the **TS template** for information on how to integrate TypeScript and **typescript-eslint** into your project.
