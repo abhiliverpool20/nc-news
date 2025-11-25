@@ -1,20 +1,95 @@
-# React + Vite
+# 📰 NC News Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🌐 Deployed App
 
-## Official Plugins
+**https://nc-news-app2025.netlify.app**
 
-Currently, two official plugins are available:
+---
 
-- **@vitejs/plugin-react** — uses Babel (or oxc when used in rolldown-vite) for Fast Refresh
-- **@vitejs/plugin-react-swc** — uses SWC for Fast Refresh
+## 📌 Project Summary
 
-## React Compiler
+NC News is an interactive news platform where users can explore articles, filter them by topic, and sort results based on different criteria. Each article page includes its full content, an image, comment threads, and voting functionality.
 
-The React Compiler is not enabled in this template because of its impact on dev and build performance.  
-To add it, see the official documentation.
+The frontend is built with **React** and communicates with a fully hosted REST API on **Render**, enabling live updates such as posting comments, deleting comments, and adjusting vote counts with optimistic rendering.
 
-## Expanding the ESLint Configuration
+### Users can:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled.  
-Check out the **TS template** for information on how to integrate TypeScript and **typescript-eslint** into your project.
+- Browse all published articles
+- View articles by topic
+- Sort articles by date, votes, or number of comments
+- Toggle between ascending and descending order
+- Read full articles
+- Post comments as the default user
+- Delete comments authored by the logged-in user
+- Vote on articles with instant UI updates
+
+---
+
+## 🔗 Backend Repository
+
+https://github.com/abhishek-0001/northcoders-news-BE
+
+Live API:  
+https://nc-news-api-ktmb.onrender.com/api
+
+---
+
+# 📦 Minimum Node Version
+
+This project requires:
+
+```
+Node v20.0.0 or higher
+```
+
+Check your version:
+
+```
+node -v
+```
+
+---
+
+# 🧰 Running the Project Locally
+
+Follow these steps to run the app on your machine:
+
+### 1. Clone the repository:
+
+```bash
+git clone https://github.com/<your-username>/nc-news.git
+```
+
+### 2. Navigate into the folder:
+
+```bash
+cd nc-news
+```
+
+### 3. Install project dependencies:
+
+```bash
+npm install
+```
+
+### 4. Start the development server:
+
+```bash
+npm run dev
+```
+
+---
+
+# 📝 Planning Documentation
+
+All planning files, including wireframes and the component tree diagram, are stored in:
+
+```
+/planning
+```
+
+---
+
+# 🏁 Attribution
+
+This portfolio project was created as part of a Digital Skills Bootcamp in Software Engineering provided by [Northcoders](https://northcoders.com/).
