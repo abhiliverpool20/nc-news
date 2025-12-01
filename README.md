@@ -27,8 +27,6 @@ The frontend is built with **React** and communicates with a fully hosted REST A
 
 ## 🔗 Backend Repository
 
-https://github.com/abhishek-0001/northcoders-news-BE
-
 Live API:  
 https://nc-news-api-ktmb.onrender.com/api
 
